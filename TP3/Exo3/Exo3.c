@@ -5,20 +5,32 @@
 #define NBMAXNOTES 30
 
 int main() {
-	float notes[NBMAXNOTES], N = 0, moy = 0;
+	float notes[NBMAXNOTES] = { 0 };
+	float N = 0, moy = 0;
 	int i = 0, Abs = 0, STOP = 0,valid=0;
 	char Lettre;
+
+	int j = 0;
+	float min = 20;
+	float max = 0;
 	do {
 		printf("\nEntrez la note no %d:", i);
 		scanf_s("%f", &N);
+
 		if (N > 0 && N < 20) {
+			if (N < min)
+				min = N;
+
+			if (N > max)
+				max = N;
 			notes[i] = N;
 			moy = moy + N;
 			valid++;
 		}
 		else {
+			
+			printf("\n Note invalide (A=absent/O=arreter/N=continuer):");
 			do {
-				printf("\n Note invalide (A=absent/O=arreter/N=continuer):");
 				Lettre = getchar();
 			} while (Lettre != 'A' && Lettre != 'O' && Lettre != 'N');
 			switch (Lettre)
@@ -44,16 +56,7 @@ int main() {
 
 	printf("\nNombre de notes valides:%d\n", valid);
 	printf("Nombre d'abscences:%d\n", Abs);
-	int j = 0;
-	float min = 20, max = 0;
-	for ( j = 0; j <NBMAXNOTES; j++)
-	{
-		if (notes[j] < min)
-			min = notes[j];
-
-		if (notes[j] > max)
-			max = notes[j];
-	}
+	
 	moy = (moy / valid);
 	printf("La moyenne de ces %d notes est de %f\n",valid, moy);
 	printf("Note la plus basse: %f\n", min);
@@ -61,10 +64,10 @@ int main() {
 
 	int n = 0;
 	float tampon = 0, ecartype = 0;
-	for ( n = 0; n < NBMAXNOTES; n++)
+	for ( n = 0; n < valid; n++)
 	{
-		tampon += ((notes[n] - moy)* (notes[n] - moy));
+		tampon =tampon + ((notes[n] - moy)* (notes[n] - moy));
 	}
-	ecartype = sqrtf((1 / valid- 1)*tampon);
+	ecartype = sqrt((1.0 / ((double)valid - 1.0)) * (double)tampon);
 	printf("Ecart type= %f", ecartype);
 }
