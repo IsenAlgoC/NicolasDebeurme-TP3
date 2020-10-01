@@ -87,4 +87,23 @@ int main() {
 	}
 	int en_desordre = 1,h=0;
 	
-	
+	while (en_desordre)
+	{
+		en_desordre = 0;
+
+		for (h = 0; h < NBMAXNOTES; h++)
+		{
+			/* Si les 2 éléments sont mal triés */
+			if (notes[h] > notes[h + 1])
+			{
+				/* Inversion des 2 éléments */
+				float tmp = notes[h + 1];
+				notes[h + 1] = notes[h];
+				notes[h] = tmp;
+
+				/* Le tableau n'est toujours pas trié */
+				en_desordre = 1;
+			}
+		}
+	}
+}
